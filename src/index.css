@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Lato:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    background: linear-gradient(#29251c, #2c2306);
+    color: #d9e2f1;
+    min-height: 100vh;
+}
+
+/*  I know it is not reasonable to use global styling in conjunction with twailwing or mui inline styling. But i used global 
+    styling a bit in index.css file (here) just for practicing how to use tailwind in a css file using @layer utilities{}. That is 
+    only for learning and practicing purposes and i'm aware that is not basically correct. */
+
+@layer utilities {
+    .main-header {
+        @apply flex flex-col sm:flex-row justify-between items-center py-12 px-[6%];
+    }
+
+    .main-header #title {
+        @apply flex gap-4 items-center cursor-pointer;
+    }
+
+    .main-header #title img {
+        @apply w-16 h-16 object-contain rounded-[50%] border-2 border-[#ffc404];
+    }
+    .main-header button {
+        @apply text-xl sm:text-2xl mt-5 sm:mt-0;
+    }
+
+    .main-header h1 {
+        @apply font-bold  text-2xl sm:text-[2rem] m-0 text-[#ffc404] tracking-[0.2rem] uppercase;
+    }
+
+    .meal-item article {
+        @apply bg-[#1d1a16] rounded-2xl overflow-hidden text-center shadow-xl h-full flex flex-col justify-between items-center;
+    }
+
+    .meal-item img {
+        @apply w-full h-80 object-cover;
+    }
+    .meal-item h3 {
+        @apply text-2xl font-normal my-3 mx-0;
+    }
+    .meal-item-description {
+        @apply m-4;
+    }
+    .meal-item-price {
+        @apply inline-block bg-[#312c1d] text-[#ffc404] text-[0.9rem] font-bold py-2 px-8 m-0 rounded;
+    }
+
+    .control {
+        @apply my-2 mx-0 flex flex-col gap-4 justify-center items-center;
+    }
+
+    .control label {
+        @apply font-medium mb-[0.2rem];
+    }
+
+    .control input,
+    .control textarea {
+        @apply w-full p-2 rounded border-[1px] border-[#ccc];
+    }
+}
