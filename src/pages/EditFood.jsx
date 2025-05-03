@@ -3,7 +3,7 @@ import {Container, Stack, Typography} from '@mui/material'
 import AddFoodForm from '../components/AddFoodForm'
 import {useMutation, useQuery} from '@tanstack/react-query'
 import {useNavigate, useParams} from 'react-router-dom'
-import {fetchFood, updateFoodFn, updateImageFn} from '../http'
+import {fetchFood, updateFoodFn} from '../http'
 import {queryClient} from '../App'
 import {Button} from '../components/UI/Button'
 
@@ -38,7 +38,8 @@ export default function EditFood() {
         },
     })
 
-    const {
+    // Related To Sever Folder As Backend
+    /* const {
         mutate: updateImageMutate,
         isPending: ImageIsPending,
         isError: ImageIsError,
@@ -48,16 +49,17 @@ export default function EditFood() {
         onSuccess: data => {
             editFoodMutate(data)
         },
-    })
+    }) 
 
     const status = {
         isPending: editIsPending || ImageIsPending,
         isError: editIsError || ImageIsError,
         error: editError ?? ImageError,
-    }
+    } */
 
     function onSubmit(foodData) {
-        updateImageMutate(foodData)
+        // updateImageMutate(foodData)
+        editFoodMutate({...foodData, foodId: params.id})
         navigate('/' + params.id)
     }
 
@@ -69,7 +71,7 @@ export default function EditFood() {
             </div>
         )
     }
-    if (isError || status.isError) {
+    if (isError || editIsError) {
         throw new Error(error)
     }
 
@@ -103,9 +105,9 @@ export default function EditFood() {
                         <Button
                             type="submit"
                             className="bg-[#ffc404] hover:bg-[#ffab04]"
-                            disabled={status.isPending}
+                            disabled={editIsPending}
                         >
-                            {status.isPending ? 'Saving...' : 'Save'}
+                            {editIsPending ? 'Saving...' : 'Save'}
                         </Button>
                     </Stack>
                 </AddFoodForm>

@@ -1,5 +1,5 @@
 import {Box, Grid, Stack} from '@mui/material'
-import {currencyFormatter} from '../util/formatter'
+import {currencyFormatter, formatDate} from '../util/formatter'
 import {Button} from './UI/Button'
 import {useGSAP} from '@gsap/react'
 import gsap from 'gsap'
@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom'
 import {Info, InfoOutlined} from '@mui/icons-material'
 
 export default function MealItem({image, title, price, description, id, date, searchTerm}) {
-    useGSAP(() => {
+    /* useGSAP(() => {
         gsap.fromTo(
             '.meal-item',
             {y: -200, opacity: 0},
@@ -19,12 +19,12 @@ export default function MealItem({image, title, price, description, id, date, se
                 y: 0,
             }
         )
-    }, [searchTerm])
+    }, [searchTerm]) */
 
     return (
         <Grid item className="meal-item" xs={12} sm={6} lg={4} xl={3}>
             <article>
-                <img src={`http://localhost:5001/${image}`} alt={title} />
+                <img src={`http://localhost:3000/${image}`} alt={title} />
                 <h3>{title}</h3>
                 <span className="meal-item-price">{currencyFormatter.format(price)}</span>
                 <p className="meal-item-description"> {description}</p>
@@ -34,7 +34,7 @@ export default function MealItem({image, title, price, description, id, date, se
                     className="flex justify-between w-full mb-5 px-5 md:px-10 items-baseline"
                 >
                     <Box className="bg-[#312c1d] rounded py-1 pt-[0.4rem]  px-4 text-sm text-yellow-600">
-                        {date}
+                        {formatDate(date)}
                     </Box>
 
                     <Link to={`/${id}`}>

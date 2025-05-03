@@ -49,8 +49,8 @@ function ImagePicker({register, required, error, name, imageFile, defaultValue})
                             component="img"
                             height="200"
                             image={
-                                defaultValue
-                                    ? `http://localhost:5001/${defaultValue}`
+                                defaultValue && !selectedImage
+                                    ? `http://localhost:3000/${defaultValue}`
                                     : selectedImage
                             }
                             alt="Selected image"

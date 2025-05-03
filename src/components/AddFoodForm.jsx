@@ -16,25 +16,12 @@ export default function CheckoutForm({food, children, SubmitFn}) {
     const currentDate = moment().format('YYYY-MM-DD')
 
     async function onSubmit(foodData) {
-        let image = new FormData()
-        if (foodData['image-upload'][0]) {
-            image.append('file', foodData['image-upload'][0])
-        } else {
-            image = food?.image
-        }
-
-        delete foodData['image-upload']
-
-        const date = moment(foodData.date).format('DD MMM YYYY')
         const price = Number(foodData.price).toFixed(2)
 
-        if (food) {
-            foodData = {...foodData, date, price, id: food.id}
-        } else {
-            foodData = {...foodData, date, price}
-        }
+        const {'image-upload': imageUpload ,...rest} = foodData
+        foodData = {...rest, price, image: foodData['image-upload'][0]}
 
-        SubmitFn({newFood: foodData, image})
+        SubmitFn({newFood: foodData})
     }
 
     return (

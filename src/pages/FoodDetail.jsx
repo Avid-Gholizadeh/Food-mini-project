@@ -1,11 +1,11 @@
 import {useMutation, useQuery} from '@tanstack/react-query'
 import {Link, useNavigate, useParams} from 'react-router-dom'
-import {deleteFoodData, deleteFoodImage, fetchFood} from '../http'
+import {deleteFoodData, fetchFood} from '../http'
 import {Grid} from '@mui/material'
 import {Delete, Edit} from '@mui/icons-material'
 import {Button} from '../components/UI/Button'
 import {queryClient} from '../App'
-import {useMemo} from 'react'
+import {formatDate} from '../util/formatter'
 
 export default function FoodDetail() {
     const params = useParams()
@@ -14,7 +14,7 @@ export default function FoodDetail() {
     const {data, isLoading, isError, error} = useQuery({
         queryKey: ['foods', params.id],
         queryFn: ({signal}) => fetchFood({id: params.id, signal}),
-        gcTime: 1200000,
+        gcTime: 1000 * 60 * 20,
     })
 
     // optimistic deleting using react query:
@@ -40,7 +40,8 @@ export default function FoodDetail() {
         onSettled: () => queryClient.invalidateQueries(['foods']),
     })
 
-    const {
+    // Related To Sever Folder As Backend Not My Real-Server
+    /* const {
         mutate: imageMutate,
         isPending: imagePending,
         isError: imageIsError,
@@ -57,13 +58,11 @@ export default function FoodDetail() {
         isPending: imagePending || dataPending,
         isError: imageIsError || dataIsError,
         error: imageError ?? dataError,
-    }
+    } */
 
     function handleDeleteFood() {
-        const fileName = data.image.split('/')[1]
-        // console.log(fileName)
-
-        imageMutate(fileName)
+        // const fileName = data.image.split('/')[1]
+        foodDataMutate(params.id)
         navigate('../')
     }
 
@@ -75,7 +74,7 @@ export default function FoodDetail() {
             </div>
         )
     }
-    if (isError || status.isError) {
+    if (isError || dataIsError) {
         throw new Error(error)
     }
 
@@ -88,7 +87,7 @@ export default function FoodDetail() {
                     <Grid item xs={12} md={6} className="relative">
                         <div className="flex h-full justify-center items-center relative">
                             <img
-                                src={`http://localhost:5001/${image}`}
+                                src={`http://localhost:3000/${image}`}
                                 alt={title}
                                 className="w-full h-full object-cover rounded-[20px] shadow-lg border-3 border-[#ffc404] max-h-[400px]"
                             />
@@ -99,7 +98,7 @@ export default function FoodDetail() {
                         <div className="pl-8">
                             <div className="flex justify-between items-center mb-4">
                                 <h1 className="text-4xl font-bold text-[#d9e2f1]">{title}</h1>
-                                <span className="text-sm text-yellow-500">{date}</span>
+                                <span className="text-sm text-yellow-500">{formatDate(date)}</span>
                             </div>
 
                             <p className="text-2xl font-semibold mb-4 text-[#ffc404]">${price}</p>

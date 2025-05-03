@@ -56,8 +56,8 @@ export default function Meals() {
                 {searchedMeals.length > 0 &&
                     searchedMeals.map(meal => (
                         <MealItem
-                            key={meal.id}
-                            id={meal.id}
+                            key={meal._id}
+                            id={meal._id}
                             title={meal.name}
                             price={meal.price}
                             image={meal.image}

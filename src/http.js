@@ -2,7 +2,9 @@
 
 import axios from 'axios'
 
-export async function fetchMealsFn() {
+// Server Folder Is Backend
+
+/* export async function fetchMealsFn() {
     const response = await fetch('https://66e2e08c494df9a478e37081.mockapi.io/react-Food/foods')
 
     const resData = await response.json()
@@ -100,6 +102,68 @@ export async function deleteFoodData(id) {
         const response = await axios.delete(
             'https://66e2e08c494df9a478e37081.mockapi.io/react-Food/foods/' + id
         )
+        return response.data
+    } catch (error) {
+        throw new Error(error.response ? error.response.data : error.message)
+    }
+} */
+
+// Real-Server Folder Is Backend
+
+export async function fetchMealsFn() {
+    try {
+        const response = await axios.get('http://localhost:3000/meals')
+
+        return response.data
+    } catch (error) {
+        throw new Error(error.response ? error.response.data : error.message)
+    }
+}
+
+export async function fetchFood({id, signal}) {
+    try {
+        const response = await axios.get('http://localhost:3000/meals/' + id, {signal})
+
+        return response.data
+    } catch (error) {
+        throw new Error(error.response ? error.response.data : error.message)
+    }
+}
+
+export async function createFoodFn({newFood}) {
+    const food = new FormData()
+
+    Object.entries(newFood).forEach(([key, value]) => {
+        food.append(key, value)
+    })
+
+    try {
+        const response = await axios.post('http://localhost:3000/meals', food)
+        return response.data
+    } catch (error) {
+        console.error('API error:', error.message, error.response?.data)
+        throw new Error(error.response?.data?.message || error.message)
+    }
+}
+
+export async function updateFoodFn({newFood, foodId}) {
+    const food = new FormData()
+
+    Object.entries(newFood).forEach(([key, value]) => {
+        food.append(key, value)
+    })
+    try {
+        const response = await axios.put('http://localhost:3000/meals/' + foodId, food)
+        return response.data
+    } catch (error) {
+        console.error('API error:', error.message, error.response?.data)
+        throw new Error(error.response ? error.response.data : error.message)
+    }
+}
+
+export async function deleteFoodData(id) {
+    try {
+        const response = await axios.delete('http://localhost:3000/meals/' + id)
         return response.data
     } catch (error) {
         throw new Error(error.response ? error.response.data : error.message)
