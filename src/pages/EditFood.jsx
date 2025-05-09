@@ -6,6 +6,7 @@ import {useNavigate, useParams} from 'react-router-dom'
 import {fetchFood, updateFoodFn} from '../http'
 import {queryClient} from '../App'
 import {Button} from '../components/UI/Button'
+import axios from 'axios'
 
 export default function EditFood() {
     const params = useParams()
@@ -56,6 +57,8 @@ export default function EditFood() {
         isError: editIsError || ImageIsError,
         error: editError ?? ImageError,
     } */
+
+  
 
     function onSubmit(foodData) {
         // updateImageMutate(foodData)

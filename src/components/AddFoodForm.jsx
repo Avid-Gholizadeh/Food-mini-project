@@ -24,6 +24,9 @@ export default function CheckoutForm({food, children, SubmitFn}) {
         SubmitFn({newFood: foodData})
     }
 
+
+
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="control">
             <Input

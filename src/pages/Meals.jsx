@@ -49,6 +49,8 @@ export default function Meals() {
         searchedMeals = meals
     }
 
+    console.log(meals)
+
     return (
         <main>
             <SearchInput search={handleSetSearchTerm} />
@@ -56,8 +58,8 @@ export default function Meals() {
                 {searchedMeals.length > 0 &&
                     searchedMeals.map(meal => (
                         <MealItem
-                            key={meal._id}
-                            id={meal._id}
+                            key={meal.id || meal._id}
+                            id={meal.id || meal._id}
                             title={meal.name}
                             price={meal.price}
                             image={meal.image}
