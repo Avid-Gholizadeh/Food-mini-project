@@ -17,15 +17,14 @@ export default function CheckoutForm({food, children, SubmitFn}) {
 
     async function onSubmit(foodData) {
         const price = Number(foodData.price).toFixed(2)
+        
+        const date = new Date(foodData.date).toISOString() // Converting to UTC time zone
 
-        const {'image-upload': imageUpload ,...rest} = foodData
-        foodData = {...rest, price, image: foodData['image-upload'][0]}
+        const {'image-upload': imageUpload, ...rest} = foodData
+        foodData = {...rest, price,date, image: foodData['image-upload'][0]}
 
         SubmitFn({newFood: foodData})
     }
-
-
-
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="control">

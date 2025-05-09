@@ -49,7 +49,7 @@ export default function Meals() {
         searchedMeals = meals
     }
 
-    console.log(meals)
+
 
     return (
         <main>
